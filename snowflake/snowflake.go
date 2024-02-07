@@ -157,7 +157,7 @@ func (n *Node) Generate() ID {
 			}
 		}
 	} else {
-		n.step = rand.Int63n(2)
+		n.step = rand.Int63n(10)
 	}
 
 	n.time = now
