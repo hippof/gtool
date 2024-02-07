@@ -1,7 +1,7 @@
 ### 此库由[github.com/bwmarrin/snowflake](github.com/bwmarrin/snowflake)修改而来
 	1.主要解决id前端精度丢失问题
 	2.node 节点数最多16个,范围 0~15
-	3.Epoch 设置为2024-01-01 00:00:00
+	3.Epoch 设置为2016-03-28 17:03:16.688
 	4.id添加Timestamp函数:获取时间戳
 	4.id调整Time返回时间对象time.Time
 	5.id添加TimeFormat支持格式化
