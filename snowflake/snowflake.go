@@ -6,6 +6,7 @@ import (
 	"encoding/binary"
 	"errors"
 	"fmt"
+	"math/rand"
 	"strconv"
 	"sync"
 	"time"
@@ -156,7 +157,7 @@ func (n *Node) Generate() ID {
 			}
 		}
 	} else {
-		n.step = 0
+		n.step = rand.Int63n(2)
 	}
 
 	n.time = now
