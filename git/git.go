@@ -21,13 +21,13 @@ func Repo() (repo string, err error) {
 		out string
 	)
 	if out, err = execShell("/bin/sh", "-c", "git remote -v"); err != nil {
-		return
+		return "", err
 	}
 	if repo = out[strings.Index(out, ":")+1 : strings.Index(out, ".git")]; repo == "" {
 		err = fmt.Errorf("not found, %s", out)
-		return
+		return "unkown", err
 	}
-	return
+	return repo, nil
 }
 
 // Branch ...
@@ -36,15 +36,15 @@ func Branch() (branch string, err error) {
 		out string
 	)
 	if out, err = execShell("/bin/sh", "-c", "git branch"); err != nil {
-		return
+		return "", err
 	}
 	list := strings.Split(out, "\n")
 	for _, v := range list {
 		if strings.HasPrefix(v, "*") {
 			branch = v[strings.Index(v, "*")+2:]
-			return
+			return branch, nil
 		}
 	}
 	err = fmt.Errorf("not found, %s", out)
-	return
+	return "unkown", err
 }
