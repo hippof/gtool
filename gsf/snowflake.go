@@ -1,5 +1,5 @@
 // Package snowflake provides a very simple Twitter snowflake generator and parser.
-package snowflake
+package gsf
 
 import (
 	"encoding/base64"
