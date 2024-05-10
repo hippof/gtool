@@ -34,7 +34,7 @@ func Branch() string {
 	return strings.TrimSpace(out)
 }
 
-func Version() string {
+func CommitHash() string {
 	if info, ok := debug.ReadBuildInfo(); ok {
 		for _, setting := range info.Settings {
 			if setting.Key == "vcs.revision" {
