@@ -3,6 +3,8 @@ package ggit
 import (
 	"fmt"
 	"os/exec"
+	"runtime"
+	"runtime/debug"
 	"strings"
 )
 
@@ -35,16 +37,36 @@ func Branch() (branch string, err error) {
 	var (
 		out string
 	)
-	if out, err = execShell("/bin/sh", "-c", "git branch"); err != nil {
-		return "", err
-	}
-	list := strings.Split(out, "\n")
-	for _, v := range list {
-		if strings.HasPrefix(v, "*") {
-			branch = v[strings.Index(v, "*")+2:]
-			return branch, nil
+	if runtime.GOOS == "windows" {
+		if out, err = execShell("cmd", "git rev-parse --abbrev-ref HEAD"); err != nil {
+			return "", err
+		}
+	} else {
+		if out, err = execShell("/bin/sh", "-c", "git rev-parse --abbrev-ref HEAD"); err != nil {
+			return "", err
 		}
 	}
-	err = fmt.Errorf("not found, %s", out)
-	return "unkown", err
+	return out, err
+}
+
+func Version() string {
+	if info, ok := debug.ReadBuildInfo(); ok {
+		for _, setting := range info.Settings {
+			if setting.Key == "vcs.revision" {
+				return setting.Value
+			}
+		}
+	}
+	return ""
+}
+
+func LastCommitTime() string {
+	if info, ok := debug.ReadBuildInfo(); ok {
+		for _, setting := range info.Settings {
+			if setting.Key == "vcs.time" {
+				return setting.Value
+			}
+		}
+	}
+	return ""
 }
