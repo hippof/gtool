@@ -17,20 +17,21 @@ func execShell(command string, arg ...string) (out string, err error) {
 }
 
 // Branch ...
-func Branch() (branch string, err error) {
+func Branch() string {
 	var (
 		out string
+		err error
 	)
 	if runtime.GOOS == "windows" {
 		if out, err = execShell("git", "rev-parse", "--abbrev-ref", "HEAD"); err != nil {
-			return "", err
+			return ""
 		}
 	} else {
 		if out, err = execShell("/bin/sh", "-c", "git rev-parse --abbrev-ref HEAD"); err != nil {
-			return "", err
+			return ""
 		}
 	}
-	return strings.TrimSpace(out), err
+	return strings.TrimSpace(out)
 }
 
 func Version() string {
