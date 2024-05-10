@@ -1,7 +1,6 @@
 package ggit
 
 import (
-	"fmt"
 	"os/exec"
 	"runtime"
 	"runtime/debug"
@@ -17,28 +16,13 @@ func execShell(command string, arg ...string) (out string, err error) {
 	return
 }
 
-// Repo ...
-func Repo() (repo string, err error) {
-	var (
-		out string
-	)
-	if out, err = execShell("/bin/sh", "-c", "git remote -v"); err != nil {
-		return "", err
-	}
-	if repo = out[strings.Index(out, ":")+1 : strings.Index(out, ".git")]; repo == "" {
-		err = fmt.Errorf("not found, %s", out)
-		return "unkown", err
-	}
-	return repo, nil
-}
-
 // Branch ...
 func Branch() (branch string, err error) {
 	var (
 		out string
 	)
 	if runtime.GOOS == "windows" {
-		if out, err = execShell("cmd", "git rev-parse --abbrev-ref HEAD"); err != nil {
+		if out, err = execShell("git", "rev-parse", "--abbrev-ref", "HEAD"); err != nil {
 			return "", err
 		}
 	} else {
@@ -46,7 +30,7 @@ func Branch() (branch string, err error) {
 			return "", err
 		}
 	}
-	return out, err
+	return strings.TrimSpace(out), err
 }
 
 func Version() string {
