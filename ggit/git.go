@@ -5,6 +5,7 @@ import (
 	"runtime"
 	"runtime/debug"
 	"strings"
+	"time"
 )
 
 // execShell ...
@@ -52,7 +53,16 @@ func CommitShortHash() string {
 	return ""
 }
 
-func LastCommitTime() string {
+func CommitTimeFormat(layout string) string {
+	if ct := VcsTime(); ct != "" {
+		if t, e := time.Parse(time.RFC3339, ct); e == nil {
+			return t.Format(layout)
+		}
+	}
+	return ""
+}
+
+func VcsTime() string {
 	if info, ok := debug.ReadBuildInfo(); ok {
 		for _, setting := range info.Settings {
 			if setting.Key == "vcs.time" {
@@ -61,4 +71,7 @@ func LastCommitTime() string {
 		}
 	}
 	return ""
+}
+func CommitTime() string {
+	return CommitTimeFormat(time.DateTime)
 }
