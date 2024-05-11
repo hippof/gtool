@@ -45,6 +45,13 @@ func CommitHash() string {
 	return ""
 }
 
+func CommitShortHash() string {
+	if hash := CommitHash(); hash != "" {
+		return hash[:7]
+	}
+	return ""
+}
+
 func LastCommitTime() string {
 	if info, ok := debug.ReadBuildInfo(); ok {
 		for _, setting := range info.Settings {
