@@ -72,6 +72,15 @@ func VcsTime() string {
 	}
 	return ""
 }
-func CommitTime() string {
+
+func CommitDateTime() string {
 	return CommitTimeFormat(time.DateTime)
+}
+
+func CommitTime() string {
+	return CommitTimeFormat(time.TimeOnly)
+}
+
+func CommitData() string {
+	return CommitTimeFormat(time.DateOnly)
 }
