@@ -22,4 +22,8 @@ func main() {
 	fmt.Println("分支：" + branch)
 }
 
+var version = func() string {
+	return ggit.Branch() + "@" + ggit.CommitHash()
+}()
+
 ```
