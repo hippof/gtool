@@ -9,12 +9,6 @@ import (
 )
 
 func main() {
-	repo, err := git.Repo()
-	if err != nil {
-		return
-	}
-	fmt.Println("仓库：" + repo)
-
 	branch, err := git.Branch()
 	if err != nil {
 		return
