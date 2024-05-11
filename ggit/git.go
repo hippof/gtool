@@ -81,6 +81,6 @@ func CommitTime() string {
 	return CommitTimeFormat(time.TimeOnly)
 }
 
-func CommitData() string {
+func CommitDate() string {
 	return CommitTimeFormat(time.DateOnly)
 }
