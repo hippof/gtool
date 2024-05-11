@@ -43,7 +43,14 @@ func CommitHash() string {
 			}
 		}
 	}
-	return ""
+	var (
+		out string
+		err error
+	)
+	if out, err = execShell("git", "rev-parse", "HEAD"); err != nil {
+		return ""
+	}
+	return strings.TrimSpace(out)
 }
 
 func CommitShortHash() string {
@@ -69,6 +76,17 @@ func VcsTime() string {
 				return setting.Value
 			}
 		}
+	}
+	var (
+		out string
+		err error
+	)
+	if out, err = execShell("git", "log", "-1", "--date=format:%Y-%m-%d %H:%M:%S", "--format=%cd"); err != nil {
+		return ""
+	}
+	out = strings.TrimSpace(out)
+	if t, e := time.Parse(time.DateTime, out); e == nil {
+		return t.Format(time.RFC3339)
 	}
 	return ""
 }
