@@ -2,7 +2,6 @@ package ggit
 
 import (
 	"os/exec"
-	"runtime"
 	"runtime/debug"
 	"strings"
 	"time"
@@ -23,14 +22,8 @@ func Branch() string {
 		out string
 		err error
 	)
-	if runtime.GOOS == "windows" {
-		if out, err = execShell("git", "rev-parse", "--abbrev-ref", "HEAD"); err != nil {
-			return ""
-		}
-	} else {
-		if out, err = execShell("/bin/sh", "-c", "git rev-parse --abbrev-ref HEAD"); err != nil {
-			return ""
-		}
+	if out, err = execShell("git", "rev-parse", "--abbrev-ref", "HEAD"); err != nil {
+		return ""
 	}
 	return strings.TrimSpace(out)
 }
